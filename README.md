@@ -1,4 +1,4 @@
-Cuttlesoft React Challenge
+React Challenge
 ==========================
 
 Begin by forking this repository to your own GitHub account. You will be working in your own fork and your effort will be judged within that fork (no pull requests will be made).
