@@ -92,4 +92,4 @@ This is an overview of all steps; you must complete all these steps in order, an
 
 ## Final Submission
 
-When you have completed your project, please send an email to admin@cuttlesoft.com with a link to your fork. Your final submission, that is your project repository hosted on GitHub, should only contain the branches `master` and `steps/*`.
+When you have completed your project, please send an email to aurora.ramolin@digitalfoodie.com with a link to your fork. Your final submission, that is your project repository hosted on GitHub, should only contain the branches `master` and `steps/*`.
