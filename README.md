@@ -36,7 +36,7 @@ $ webpack
 
 1. Generally speaking, it's fairly expected that the solutions are usually a simple Google search away. We ask you to not copy and paste, but if you need to look for help, be ready to list the source in either your code comments or to your lead on this assignment. If you do copy-paste, know that part of this assignment is not only the source code, but also you being able to explain your implementation(s).
 
-2. You are not to change any code outside of the `client/` directory. If you discover an error that is blocking you from continuing to make progress, and you believe that error is isolated to the `server/` directory, please contact kwabena.owusu@foodie.fm immediately.
+2. You are not to change any code outside of the `client/` directory. If you discover an error that is blocking you from continuing to make progress, and you believe that error is isolated to the `server/` directory, please contact kwabena.owusu@digitalfoodie.com immediately.
 
 ```javascript
 <Card className="container">
