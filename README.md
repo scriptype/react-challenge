@@ -36,9 +36,8 @@ $ webpack
 
 1. Generally speaking, it's fairly expected that the solutions are usually a simple Google search away. We ask you to not copy and paste, but if you need to look for help, be ready to list the source in either your code comments or to your lead on this assignment. If you do copy-paste, know that part of this assignment is not only the source code, but also you being able to explain your implementation(s).
 
-2. You are not to change any code outside of the `client/` directory. If you discover an error that is blocking you from continuing to make progress, and you believe that error is isolated to the `server/` directory, please contact admin@cuttlesoft.com immediately.
+2. You are not to change any code outside of the `client/` directory. If you discover an error that is blocking you from continuing to make progress, and you believe that error is isolated to the `server/` directory, please contact kwabena.owusu@foodie.fm immediately.
 
-3. You are to use the [Material-UI](http://www.material-ui.com/#/) library to construct your components. Don't worry; you're not graded on your design abilities. Use existing components as a guide and you should be fine. Many pages just render a simple [`Card`](http://www.material-ui.com/#/components/card). It is completely acceptable to just repeat this; for that, here's a simplified example:
 ```javascript
 <Card className="container">
     <CardTitle title="The Card Title" subtitle="The Card Subtitle." />
