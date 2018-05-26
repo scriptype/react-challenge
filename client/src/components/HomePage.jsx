@@ -1,19 +1,23 @@
-import React from 'react';
-import { Link, IndexLink } from 'react-router';
-import { Card, CardTitle, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-
+import React from 'react'
+import { Link } from 'react-router'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
 
 const HomePage = () => (
   <Card className="container">
-    <CardTitle title="Cuttlesoft - React Challenge" subtitle="This is the home page." />
+    <CardHeader title="Cuttlesoft - React Challenge" subheader="This is the home page." />
     <CardActions>
-      <FlatButton>
+      <Button variant="flat">
         <Link to="/signup">Sign Up</Link>
-    </FlatButton>
+      </Button>
+      <Button>
+        <Link to="/login">Login</Link>
+      </Button>
     </CardActions>
   </Card>
 
-);
+)
 
-export default HomePage;
+export default HomePage
