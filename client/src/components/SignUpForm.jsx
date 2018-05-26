@@ -1,14 +1,13 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import Card from '@material-ui/core/Card'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
 const SignUpForm = ({
   onSubmit,
   onChange,
-  user,
+  user
 }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
@@ -16,7 +15,7 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Name"
+          label="Name"
           name="name"
           onChange={onChange}
           value={user.name}
@@ -25,8 +24,9 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Email"
+          label="Email"
           name="email"
+          type="email"
           onChange={onChange}
           value={user.email}
         />
@@ -34,7 +34,7 @@ const SignUpForm = ({
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Password"
+          label="Password"
           type="password"
           name="password"
           onChange={onChange}
@@ -42,10 +42,22 @@ const SignUpForm = ({
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary />
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+        >
+          Create New Account
+        </Button>
       </div>
     </form>
   </Card>
-);
+)
 
-export default SignUpForm;
+SignUpForm.propTypes = {
+  onSubmit: PropTypes.func,
+  onChange: PropTypes.func,
+  user: PropTypes.object
+}
+
+export default SignUpForm
