@@ -28,6 +28,12 @@ const LoginForm = ({
     <form action="/" onSubmit={onSubmit} className={classes.container}>
       <h2 className="card-heading">Login</h2>
 
+      { errors.summary && (
+        <p className="error-message">
+          { errors.summary }
+        </p>
+      ) }
+
       <div className={`field-line ${classes.field}`}>
         <TextField
           label="Email"
