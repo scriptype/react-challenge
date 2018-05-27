@@ -1,11 +1,13 @@
 import React from 'react'
 import LoginForm from '../components/LoginForm.jsx'
+import api from '../helpers/api'
 
 class LoginPage extends React.Component {
   constructor() {
     super()
 
     this.state = {
+      errors: {},
       user: {
         email: '',
         password: ''
@@ -39,26 +41,18 @@ class LoginPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault()
-
-    // create a string for an HTTP body message
-    const email = encodeURIComponent(this.state.user.email)
-    const password = encodeURIComponent(this.state.user.password)
-    const formData = `email=${email}&password=${password}`
-
-    // create an AJAX request
-    const xhr = new XMLHttpRequest()
-    xhr.open('post', '/auth/login')
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-    xhr.responseType = 'json'
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
-        console.log({ email, password })
-      }
-    })
-    xhr.send(formData)
+    api.login(this.state.user)
+      .then(res => {
+        this.setState({
+          errors: {}
+        })
+      })
+      .catch(errors => {
+        this.setState({
+          errors
+        })
+      })
   }
 
   /**
@@ -70,6 +64,7 @@ class LoginPage extends React.Component {
         onSubmit={this.onSubmit}
         onChangeEmail={this.onChangeEmail}
         onChangePassword={this.onChangePassword}
+        errors={this.state.errors}
         user={this.state.user} />
     )
   }
