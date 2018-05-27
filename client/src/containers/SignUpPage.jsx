@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import validator from 'validator'
 import SignUpForm from '../components/SignUpForm.jsx'
 import api from '../helpers/api'
+import Auth from '../modules/Auth'
 
 class SignUpPage extends React.Component {
   /**
@@ -99,10 +100,7 @@ class SignUpPage extends React.Component {
           errors: {}
         })
 
-        // set a message
         localStorage.setItem('successMessage', res.message)
-
-        // make a redirect
         this.context.router.replace('/login')
       })
       .catch(errors => {
@@ -110,21 +108,6 @@ class SignUpPage extends React.Component {
           errors
         })
       })
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
   }
 
   /**

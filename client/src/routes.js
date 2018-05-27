@@ -1,5 +1,6 @@
 import Base from './components/Base.jsx'
 import HomePage from './components/HomePage.jsx'
+import DashboardPage from './containers/DashboardPage.jsx'
 import SignUpPage from './containers/SignUpPage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
 import Auth from './modules/Auth'
@@ -10,24 +11,36 @@ const routes = {
   childRoutes: [
     {
       path: '/',
-      component: HomePage
+      component: HomePage,
+      onEnter: (nextState, replace) => {
+        if (Auth.isUserAuthenticated()) {
+          replace('/dashboard')
+        }
+      }
+    },
+    {
+      path: '/dashboard',
+      component: DashboardPage,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/')
+        }
+      }
     },
     {
       path: '/signup',
       component: SignUpPage
     },
     {
-      path: '/logout',
-      onEnter: (nextState, replace) => {
-        Auth.deauthenticateUser();
-
-        // change the current URL to /
-        replace('/');
-      }
-    },
-    {
       path: '/login',
       component: LoginPage
+    },
+    {
+      path: '/logout',
+      onEnter: (nextState, replace) => {
+        Auth.deauthenticateUser()
+        replace('/')
+      }
     }
   ]
 }

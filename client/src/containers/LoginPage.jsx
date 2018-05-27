@@ -1,10 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import LoginForm from '../components/LoginForm.jsx'
 import api from '../helpers/api'
+import Auth from '../modules/Auth'
 
 class LoginPage extends React.Component {
-  constructor() {
-    super()
+  constructor(props, context) {
+    super(props, context)
 
     this.state = {
       errors: {},
@@ -47,8 +49,12 @@ class LoginPage extends React.Component {
         this.setState({
           errors: {}
         })
+        Auth.authenticateUser(res.token)
+        localStorage.setItem('successMessage', res.message)
+        this.context.router.replace('/')
       })
       .catch(errors => {
+        console.log('errors', errors)
         this.setState({
           errors
         })
@@ -68,6 +74,10 @@ class LoginPage extends React.Component {
         user={this.state.user} />
     )
   }
+}
+
+LoginPage.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default LoginPage

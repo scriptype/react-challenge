@@ -1,43 +1,48 @@
-import React from 'react';
-import Auth from '../modules/Auth';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import api from '../helpers/api'
+import Dashboard from '../components/Dashboard.jsx'
 
 class DashboardPage extends React.Component {
-
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context)
 
-    this.state = {};
+    this.state = {
+      secretData: ''
+    }
   }
 
   /**
    * This method will be executed after initial rendering.
    */
   componentDidMount() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('get', '/api/dashboard');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // set the authorization HTTP header
-    xhr.setRequestHeader('Authorization', `bearer ${Auth.getToken()}`);
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // set state correctly
-      }
-    });
-    xhr.send();
+    api.getDashboard()
+      .then(res => {
+        this.setState({
+          secretData: res.message
+        })
+      })
+      .catch(error => {
+        console.error('error', error)
+        this.context.router.replace('/logout')
+      })
   }
 
   /**
    * Render the component.
    */
   render() {
-    return;
+    return (
+      <Dashboard secretData={this.state.secretData} />
+    )
   }
-
 }
 
-export default DashboardPage;
+DashboardPage.contextTypes = {
+  router: PropTypes.object.isRequired
+}
+
+export default DashboardPage
