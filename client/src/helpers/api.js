@@ -1,4 +1,5 @@
 import configs from '../configs'
+import Auth from '../modules/Auth'
 
 class ApiHelper {
   constructor({ baseUrl }) {
@@ -26,12 +27,34 @@ class ApiHelper {
       body: data
     })
       .then(res => {
-        // Api doesn't return json response if response is OK
         if (res.status === 200) {
-          return res.text()
+          return res.json()
         }
-        return res.json().then(res => {
-          throw this.getDecoratedErrorObject(res)
+        return res.json().then(err => {
+          const errorObject = Object.assign({
+            errors: {}
+          }, err)
+          throw this.getDecoratedErrorObject(errorObject)
+        })
+      })
+  }
+
+  get(url) {
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'authorization': `Bearer ${Auth.getToken()}`
+      }
+    })
+      .then(res => {
+        // Api returns json only if it's a success.
+        if (res.status === 200) {
+          return res.json()
+        }
+        // Otherwise, just throw empty object, as api tells nothing.
+        throw this.getDecoratedErrorObject({
+          errors: {}
         })
       })
   }
@@ -53,6 +76,12 @@ class ApiHelper {
       email,
       password
     }))
+  }
+
+  getDashboard() {
+    const endpoint = 'api/dashboard'
+    const url = `${this.baseUrl}/${endpoint}`
+    return this.get(url)
   }
 }
 
