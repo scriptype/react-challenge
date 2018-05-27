@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router'
 import PropTypes from 'prop-types'
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
@@ -17,34 +16,17 @@ const styles = theme => ({
   }
 })
 
-const SignUpForm = ({
+const LoginForm = ({
   onSubmit,
-  onChange,
+  onChangeEmail,
+  onChangePassword,
   errors,
   user,
   classes
 }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit} className={classes.container}>
-      <h2 className="card-heading">Sign Up</h2>
-
-      { errors.summary && (
-        <p className="error-message">
-          { errors.summary }
-        </p>
-      ) }
-
-      <div className={`field-line ${classes.field}`}>
-        <TextField
-          label="Name"
-          name="name"
-          error={!!errors.name}
-          helperText={errors.name || ''}
-          onChange={onChange}
-          value={user.name}
-          fullWidth
-        />
-      </div>
+      <h2 className="card-heading">Login</h2>
 
       <div className={`field-line ${classes.field}`}>
         <TextField
@@ -53,7 +35,7 @@ const SignUpForm = ({
           type="email"
           error={!!errors.email}
           helperText={errors.email || ''}
-          onChange={onChange}
+          onChange={onChangeEmail}
           value={user.email}
           fullWidth
         />
@@ -66,33 +48,28 @@ const SignUpForm = ({
           name="password"
           error={!!errors.password}
           helperText={errors.password || ''}
-          onChange={onChange}
+          onChange={onChangePassword}
           value={user.password}
           fullWidth
         />
       </div>
 
       <div className="button-line">
-        <Button
-          variant="raised"
-          type="submit"
-          color="primary"
-        >
-          Create New Account
+        <Button variant="raised" type="submit" color="primary">
+          Login
         </Button>
       </div>
-
-      <p>Already have an account? <Link to={'/login'}>Log in</Link></p>
     </form>
   </Card>
 )
 
-SignUpForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func,
+  onChangeEmail: PropTypes.func,
+  onChangePassword: PropTypes.func,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  user: PropTypes.object,
+  classes: PropTypes.object
 }
 
-export default withStyles(styles)(SignUpForm)
+export default withStyles(styles)(LoginForm)
