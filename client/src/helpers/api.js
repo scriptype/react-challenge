@@ -25,12 +25,14 @@ class ApiHelper {
       },
       body: data
     })
-      .then(res => res.json())
       .then(res => {
+        // Api doesn't return json response if response is OK
         if (res.status === 200) {
-          return res
+          return res.text()
         }
-        throw this.getDecoratedErrorObject(res)
+        return res.json().then(res => {
+          throw this.getDecoratedErrorObject(res)
+        })
       })
   }
 
