@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
@@ -12,21 +11,19 @@ const styles = theme => ({
   })
 })
 
-const Dashboard = ({ classes, secretData, userType }) => (
-  <Paper className={classes.messageContainer} elevation={4}>
+const MainPane = ({ classes }) => (
+  <div>
     <Typography variant="headline" component="h3">
-      Welcome { userType }
+      Welcome user!
     </Typography>
     <Typography component="p">
-      { secretData }
+      hey.
     </Typography>
-  </Paper>
+  </div>
 )
 
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired,
-  secretData: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired
+MainPane.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Dashboard)
+export default withStyles(styles)(MainPane)

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Api from '../helpers/Api'
 import Auth from '../helpers/Auth'
-import Dashboard from '../components/Dashboard.jsx'
+import Dashboard from '../components/Dashboard/index.jsx'
 
 class DashboardPage extends React.Component {
   /**
