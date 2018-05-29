@@ -12,10 +12,10 @@ const styles = theme => ({
   })
 })
 
-const Dashboard = ({ classes, secretData }) => (
+const Dashboard = ({ classes, secretData, userType }) => (
   <Paper className={classes.messageContainer} elevation={4}>
     <Typography variant="headline" component="h3">
-      Secret Data
+      Welcome { userType }
     </Typography>
     <Typography component="p">
       { secretData }
@@ -25,7 +25,8 @@ const Dashboard = ({ classes, secretData }) => (
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
-  secretData: PropTypes.string.isRequired
+  secretData: PropTypes.string.isRequired,
+  userType: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(Dashboard)

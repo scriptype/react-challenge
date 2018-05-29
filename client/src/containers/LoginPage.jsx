@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
         this.setState({
           errors: {}
         })
-        Auth.authenticateUser(res.token)
+        Auth.authenticateUser(res.token, res.user)
         localStorage.setItem('successMessage', res.message)
         this.context.router.replace('/')
       })

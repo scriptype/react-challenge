@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import api from '../helpers/api'
+import Auth from '../modules/Auth'
 import Dashboard from '../components/Dashboard.jsx'
 
 class DashboardPage extends React.Component {
@@ -11,7 +12,8 @@ class DashboardPage extends React.Component {
     super(props, context)
 
     this.state = {
-      secretData: ''
+      secretData: '',
+      userType: ''
     }
   }
 
@@ -29,6 +31,10 @@ class DashboardPage extends React.Component {
         console.error('error', error)
         this.context.router.replace('/logout')
       })
+
+    this.setState({
+      userType: Auth.isUserAdmin() ? 'admin' : 'user'
+    })
   }
 
   /**
@@ -36,7 +42,9 @@ class DashboardPage extends React.Component {
    */
   render() {
     return (
-      <Dashboard secretData={this.state.secretData} />
+      <Dashboard
+        secretData={this.state.secretData}
+        userType={this.state.userType} />
     )
   }
 }
