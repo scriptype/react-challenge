@@ -59,23 +59,16 @@ class ApiHelper {
       })
   }
 
-  signUp({ name, email, password }) {
+  signUp(info) {
     const endpoint = 'auth/signup'
     const url = `${this.baseUrl}/${endpoint}`
-    return this.post(url, this.getQueryString({
-      name,
-      email,
-      password
-    }))
+    return this.post(url, this.getQueryString(info))
   }
 
-  login({ email, password }) {
+  login(credentials) {
     const endpoint = 'auth/login'
     const url = `${this.baseUrl}/${endpoint}`
-    return this.post(url, this.getQueryString({
-      email,
-      password
-    }))
+    return this.post(url, this.getQueryString(credentials))
   }
 
   getDashboard() {

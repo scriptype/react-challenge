@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import validator from 'validator'
 import SignUpForm from '../components/SignUpForm.jsx'
 import api from '../helpers/api'
-import Auth from '../modules/Auth'
 
 class SignUpPage extends React.Component {
   /**
@@ -21,6 +20,13 @@ class SignUpPage extends React.Component {
         password: '',
         admin: false
       }
+    }
+
+    this.eventValue = {
+      email: 'value',
+      text: 'value',
+      password: 'value',
+      checkbox: 'checked'
     }
 
     this.processForm = this.processForm.bind(this)
@@ -46,13 +52,7 @@ class SignUpPage extends React.Component {
           }
         }
 
-      case 'email':
-        return { }
-
-      case 'password':
-        return { }
-
-      case 'admin':
+      default:
         return { }
     }
   }
@@ -69,8 +69,9 @@ class SignUpPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   onChangeUser(event) {
+    const valueLookup = this.eventValue[event.target.type]
+    const value = event.target[valueLookup]
     const key = event.target.name
-    const value = event.target.value
 
     const { message } = this.validate(key, value)
     this.setState({

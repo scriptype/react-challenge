@@ -84,7 +84,7 @@ const SignUpForm = ({
       <div className={`field-line ${classes.field}`}>
         { errors.admin && (
           <p className="error-message">
-            {errors.admin}
+            { errors.admin }
           </p>
         ) }
         <FormControlLabel
@@ -94,7 +94,7 @@ const SignUpForm = ({
               classes={styles.checkbox}
               inputProps={{ name: 'admin' }}
               onChange={onChange}
-              value={user.admin} />
+              checked={user.admin} />
           } />
       </div>
 
