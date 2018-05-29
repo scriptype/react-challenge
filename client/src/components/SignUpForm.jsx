@@ -1,92 +1,124 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
+import React from 'react'
+import { Link } from 'react-router'
+import PropTypes from 'prop-types'
+import Card from '@material-ui/core/Card'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { withStyles } from '@material-ui/core/styles'
 
-const CheckboxStyles = {
-  block: {
-    maxWidth: 250,
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  field: {
+    width: 250
   },
   checkbox: {
-    width: 100,
-    marginBottom: 16,
-    display: 'inline-block'
-  },
-};
-
+    root: {
+      width: 100,
+      marginBottom: 16,
+      display: 'inline-block'
+    }
+  }
+})
 
 const SignUpForm = ({
   onSubmit,
   onChange,
   errors,
   user,
+  classes
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
+    <form action="/" onSubmit={onSubmit} className={classes.container}>
       <h2 className="card-heading">Sign Up</h2>
 
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
+      { errors.summary && (
+        <p className="error-message">
+          { errors.summary }
+        </p>
+      ) }
 
-      <div className="field-line">
+      <div className={`field-line ${classes.field}`}>
         <TextField
-          floatingLabelText="Name"
+          label="Name"
           name="name"
-          errorText={errors.name}
+          error={!!errors.name}
+          helperText={errors.name || ''}
           onChange={onChange}
           value={user.name}
+          fullWidth
         />
       </div>
 
-      <div className="field-line">
+      <div className={`field-line ${classes.field}`}>
         <TextField
-          floatingLabelText="Email"
+          label="Email"
           name="email"
-          errorText={errors.email}
+          type="email"
+          error={!!errors.email}
+          helperText={errors.email || ''}
           onChange={onChange}
           value={user.email}
+          fullWidth
         />
       </div>
 
-      <div className="field-line">
+      <div className={`field-line ${classes.field}`}>
         <TextField
-          floatingLabelText="Password"
+          label="Password"
           type="password"
           name="password"
+          error={!!errors.password}
+          helperText={errors.password || ''}
           onChange={onChange}
-          errorText={errors.password}
           value={user.password}
+          fullWidth
         />
       </div>
 
-      <div className="field-line">
-      {errors.admin && <p className="error-message">{errors.admin}</p>}
-        <Checkbox
+      <div className={`field-line ${classes.field}`}>
+        { errors.admin && (
+          <p className="error-message">
+            {errors.admin}
+          </p>
+        ) }
+        <FormControlLabel
           label="Admin"
-          labelPosition="left"
-          style={CheckboxStyles.checkbox}
-          name="admin"
-          onChange={onChange}
-          value={user.admin}
-        />
+          control={
+            <Checkbox
+              classes={styles.checkbox}
+              inputProps={{ name: 'admin' }}
+              onChange={onChange}
+              value={user.admin} />
+          } />
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary />
+        <Button
+          variant="raised"
+          type="submit"
+          color="primary"
+        >
+          Create New Account
+        </Button>
       </div>
 
-      <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
+      <p>Already have an account? <Link to={'/login'}>Log in</Link></p>
     </form>
   </Card>
-);
+)
 
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
-};
+  user: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
+}
 
-export default SignUpForm;
-
+export default withStyles(styles)(SignUpForm)

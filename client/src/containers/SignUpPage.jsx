@@ -1,14 +1,16 @@
-import React, { PropTypes } from 'react';
-import SignUpForm from '../components/SignUpForm.jsx';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import validator from 'validator'
+import SignUpForm from '../components/SignUpForm.jsx'
+import api from '../helpers/api'
+import Auth from '../modules/Auth'
 
 class SignUpPage extends React.Component {
-
   /**
    * Class constructor.
    */
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     // set the initial component state
     this.state = {
@@ -19,10 +21,69 @@ class SignUpPage extends React.Component {
         password: '',
         admin: false
       }
-    };
+    }
 
-    this.processForm = this.processForm.bind(this);
-    this.changeUser = this.changeUser.bind(this);
+    this.processForm = this.processForm.bind(this)
+    this.onChangeUser = this.onChangeUser.bind(this)
+  }
+
+  validate(key, value) {
+    switch (key) {
+      case 'name':
+        return {
+          rules: [
+            validator.isAlphanumeric,
+            validator.isLowercase
+          ],
+          get isValid() {
+            return this.rules.every(rule => rule.call(validator, value))
+          },
+          get message() {
+            if (!this.isValid) {
+              return 'Name should be lowercase and alphanumeric.'
+            }
+            return ''
+          }
+        }
+
+      case 'email':
+        return { }
+
+      case 'password':
+        return { }
+
+      case 'admin':
+        return { }
+    }
+  }
+
+  hasErrors() {
+    return Object.keys(this.state.errors)
+      .filter(key => key !== 'summary')
+      .some(key => this.state.errors[key])
+  }
+
+  /**
+   * Change the user object.
+   *
+   * @param {object} event - the JavaScript event object
+   */
+  onChangeUser(event) {
+    const key = event.target.name
+    const value = event.target.value
+
+    const { message } = this.validate(key, value)
+    this.setState({
+      errors: Object.assign(this.state.errors, {
+        [key]: message || ''
+      })
+    })
+
+    this.setState({
+      user: Object.assign(this.state.user, {
+        [key]: value
+      })
+    })
   }
 
   /**
@@ -31,62 +92,26 @@ class SignUpPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
-    event.preventDefault();
+    event.preventDefault()
 
-    // create a string for an HTTP body message
-    const name = encodeURIComponent(this.state.user.name);
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
-    const admin = encodeURIComponent(this.state.user.admin);
-    const formData = `name=${name}&email=${email}&password=${password}&admin=${admin}`;
+    if (this.hasErrors()) {
+      return false
+    }
 
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/signup');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
-
-        // change the component-container state
+    api.signUp(this.state.user)
+      .then(res => {
         this.setState({
           errors: {}
-        });
+        })
 
-        // set a message
-        localStorage.setItem('successMessage', xhr.response.message);
-
-        // make a redirect
-        this.context.router.replace('/login');
-      } else {
-        // failure
-
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
+        localStorage.setItem('successMessage', res.message)
+        this.context.router.replace('/login')
+      })
+      .catch(errors => {
         this.setState({
           errors
-        });
-      }
-    });
-    xhr.send(formData);
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
+        })
+      })
   }
 
   /**
@@ -96,17 +121,16 @@ class SignUpPage extends React.Component {
     return (
       <SignUpForm
         onSubmit={this.processForm}
-        onChange={this.changeUser}
+        onChange={this.onChangeUser}
         errors={this.state.errors}
         user={this.state.user}
       />
-    );
+    )
   }
-
 }
 
 SignUpPage.contextTypes = {
   router: PropTypes.object.isRequired
-};
+}
 
-export default SignUpPage;
+export default SignUpPage
