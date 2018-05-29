@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import LoginForm from '../components/LoginForm.jsx'
-import api from '../helpers/api'
-import Auth from '../modules/Auth'
+import Api from '../helpers/Api'
+import Auth from '../helpers/Auth'
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -44,7 +44,7 @@ class LoginPage extends React.Component {
    */
   processForm(event) {
     event.preventDefault()
-    api.login(this.state.user)
+    Api.login(this.state.user)
       .then(res => {
         this.setState({
           errors: {}

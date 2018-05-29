@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import validator from 'validator'
 import SignUpForm from '../components/SignUpForm.jsx'
-import api from '../helpers/api'
+import Api from '../helpers/Api'
 
 class SignUpPage extends React.Component {
   /**
@@ -99,7 +99,7 @@ class SignUpPage extends React.Component {
       return false
     }
 
-    api.signUp(this.state.user)
+    Api.signUp(this.state.user)
       .then(res => {
         this.setState({
           errors: {}

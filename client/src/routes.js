@@ -3,7 +3,7 @@ import HomePage from './components/HomePage.jsx'
 import DashboardPage from './containers/DashboardPage.jsx'
 import SignUpPage from './containers/SignUpPage.jsx'
 import LoginPage from './containers/LoginPage.jsx'
-import Auth from './modules/Auth'
+import Auth from './helpers/Auth'
 
 const routes = {
   // base component (wrapper for the whole application).

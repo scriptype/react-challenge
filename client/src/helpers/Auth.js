@@ -1,4 +1,4 @@
-class Auth {
+export default class Auth {
   /**
    * Authenticate a user. Save a token string in Local Storage
    *
@@ -46,5 +46,3 @@ class Auth {
     return localStorage.getItem('token')
   }
 }
-
-export default Auth

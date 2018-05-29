@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, IndexLink } from 'react-router'
-import Auth from '../modules/Auth'
+import Auth from '../helpers/Auth'
 
 const Base = ({ children }) => (
   <div>

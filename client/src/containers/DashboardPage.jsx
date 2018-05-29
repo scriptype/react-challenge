@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import api from '../helpers/api'
-import Auth from '../modules/Auth'
+import Api from '../helpers/Api'
+import Auth from '../helpers/Auth'
 import Dashboard from '../components/Dashboard.jsx'
 
 class DashboardPage extends React.Component {
@@ -21,7 +21,7 @@ class DashboardPage extends React.Component {
    * This method will be executed after initial rendering.
    */
   componentDidMount() {
-    api.getDashboard()
+    Api.getDashboard()
       .then(res => {
         this.setState({
           secretData: res.message
