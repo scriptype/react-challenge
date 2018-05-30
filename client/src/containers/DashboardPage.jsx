@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Api from '../helpers/Api'
 import Auth from '../helpers/Auth'
+import { randomNumber } from '../helpers/utils'
 import Dashboard from '../components/Dashboard/index.jsx'
 
 class DashboardPage extends React.Component {
@@ -13,8 +14,11 @@ class DashboardPage extends React.Component {
 
     this.state = {
       secretData: '',
-      userType: ''
+      userType: '',
+      notifications: this.getRandomNotifications()
     }
+
+    this.onReadNotification = this.onReadNotification.bind(this)
   }
 
   /**
@@ -37,6 +41,44 @@ class DashboardPage extends React.Component {
     })
   }
 
+  getRandomNotifications() {
+    const words = [
+      'suspendisse', 'sit', 'amet', 'semper', 'ipsum', 'In',
+      'eleifend', 'purus', 'et', 'egestas', 'blandit', 'aenean',
+      'ac', 'ante', 'vel', 'urna', 'porttitor', 'ullamcorper',
+      'curabitur', 'vitae', 'sapien', 'tincidunt', 'pretium',
+      'ipsum', 'sit'
+    ]
+
+    const notificationCount = Math.round(randomNumber(2, 13))
+
+    return [...Array(notificationCount).keys()].map(notification => {
+      const wordCount = Math.round(randomNumber(5, 12))
+      return {
+        read: false,
+        message: [...Array(wordCount).keys()]
+          .map(word => (
+            words[Math.floor(Math.random() * words.length)]
+          ))
+          .join(' ')
+          .concat('.')
+      }
+    })
+  }
+
+  onReadNotification(index) {
+    this.setState({
+      notifications: this.state.notifications.map((notification, i) => {
+        if (i === index) {
+          return Object.assign({}, notification, {
+            read: true
+          })
+        }
+        return notification
+      })
+    })
+  }
+
   /**
    * Render the component.
    */
@@ -44,7 +86,9 @@ class DashboardPage extends React.Component {
     return (
       <Dashboard
         secretData={this.state.secretData}
-        userType={this.state.userType} />
+        userType={this.state.userType}
+        notifications={this.state.notifications}
+        onReadNotification={this.onReadNotification} />
     )
   }
 }

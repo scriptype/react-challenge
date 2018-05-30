@@ -4,8 +4,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import PersonPinIcon from '@material-ui/icons/PersonPin'
+import Badge from '@material-ui/core/Badge'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import SettingsIcon from '@material-ui/icons/Settings'
 import MainPane from './MainPane.jsx'
 import AdminPane from './AdminPane.jsx'
 
@@ -13,24 +14,36 @@ const styles = theme => ({
   container: theme.mixins.gutters({
     paddingTop: 16,
     paddingBottom: 16,
-    margin: theme.spacing.unit * 3
-  })
+    marginTop: theme.spacing.unit * 3
+  }),
+  pane: {
+    padding: theme.spacing.unit * 6
+  },
+  badge: {
+    padding: `0 ${theme.spacing.unit * 2}px`
+  }
 })
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props)
 
+    const self = this
     this.panes = [{
       pane: MainPane,
       get props() {
         return {
-          secretData: props.secretData
+          secretData: self.props.secretData
         }
       }
     }, {
       pane: AdminPane,
-      props: {}
+      get props() {
+        return {
+          notifications: self.props.notifications,
+          onReadNotification: self.props.onReadNotification
+        }
+      }
     }]
 
     this.state = {
@@ -44,29 +57,47 @@ class Dashboard extends React.Component {
     })
   }
 
+  adminTabHeader() {
+    const { classes, notifications } = this.props
+    const unReadNotifications = notifications.filter(n => !n.read)
+    return (
+      <Badge
+        className={classes.badge}
+        color="secondary"
+        badgeContent={unReadNotifications.length}
+      >
+        ADMIN SECTION
+      </Badge>
+    )
+  }
+
   render() {
-    const { classes, secretData, userType } = this.props
+    const { classes, userType } = this.props
     const { activePaneIndex } = this.state
     const activePane = this.panes[activePaneIndex]
     return (
-      <Paper className={classes.container} elevation={4}>
-        { userType === 'admin' ? (
-          <div>
-            <Tabs
-              value={activePaneIndex}
-              onChange={this.onChangePane.bind(this)}
-              fullWidth
-              indicatorColor="secondary"
-              textColor="secondary"
-            >
-              <Tab icon={<FavoriteIcon />} label="DASHBOARD" />
-              <Tab icon={<PersonPinIcon />} label="ADMIN SECTION" />
-            </Tabs>
-            <activePane.pane {...activePane.props} />
-          </div>
-        ) : (
-          <MainPane secretData={secretData} />
-        ) }
+      <Paper className={`container ${classes.container}`} elevation={2}>
+        <Tabs
+          value={activePaneIndex}
+          onChange={this.onChangePane.bind(this)}
+          fullWidth
+          indicatorColor="secondary"
+          textColor="secondary"
+          centered
+        >
+          <Tab
+            icon={<DashboardIcon />}
+            label="DASHBOARD" />
+
+          { userType === 'admin' && (
+            <Tab
+              icon={<SettingsIcon />}
+              label={this.adminTabHeader()} />
+          ) }
+        </Tabs>
+        <div className={classes.pane}>
+          <activePane.pane {...activePane.props} />
+        </div>
       </Paper>
     )
   }
@@ -75,7 +106,9 @@ class Dashboard extends React.Component {
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
   secretData: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired
+  userType: PropTypes.string.isRequired,
+  notifications: PropTypes.array.isRequired,
+  onReadNotification: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(Dashboard)
