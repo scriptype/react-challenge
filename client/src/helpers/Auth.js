@@ -19,15 +19,6 @@ export default class Auth {
   }
 
   /**
-   * Check if a user is admin
-   *
-   * @returns {boolean}
-   */
-  static isUserAdmin() {
-    return JSON.parse(localStorage.getItem('user')).admin === true
-  }
-
-  /**
    * Deauthenticate a user. Remove a token from Local Storage.
    *
    */
@@ -44,5 +35,15 @@ export default class Auth {
 
   static getToken() {
     return localStorage.getItem('token')
+  }
+
+  /**
+   * Get user.
+   *
+   * @returns {object}
+   */
+
+  static getUser() {
+    return JSON.parse(localStorage.getItem('user'))
   }
 }

@@ -36,8 +36,9 @@ class DashboardPage extends React.Component {
         this.context.router.replace('/logout')
       })
 
+    const isUserAdmin = Auth.getUser().admin
     this.setState({
-      userType: Auth.isUserAdmin() ? 'admin' : 'user'
+      userType: isUserAdmin ? 'admin' : 'user'
     })
   }
 
