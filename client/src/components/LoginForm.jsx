@@ -22,11 +22,18 @@ const LoginForm = ({
   onChangePassword,
   errors,
   user,
+  successMessage,
   classes
 }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit} className={classes.container}>
       <h2 className="card-heading">Login</h2>
+
+      { successMessage && (
+        <p className="success-message">
+          { successMessage }
+        </p>
+      ) }
 
       { errors.summary && (
         <p className="error-message">
@@ -75,6 +82,7 @@ LoginForm.propTypes = {
   onChangePassword: PropTypes.func,
   errors: PropTypes.object.isRequired,
   user: PropTypes.object,
+  successMessage: PropTypes.string,
   classes: PropTypes.object
 }
 

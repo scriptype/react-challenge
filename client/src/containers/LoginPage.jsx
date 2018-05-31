@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import LoginForm from '../components/LoginForm.jsx'
 import Api from '../helpers/Api'
 import Auth from '../helpers/Auth'
+import Storage from '../helpers/Storage'
 
 class LoginPage extends React.Component {
   constructor(props, context) {
@@ -13,7 +14,10 @@ class LoginPage extends React.Component {
       user: {
         email: '',
         password: ''
-      }
+      },
+      successMessage: this.props.location.query.signedUp
+        ? Storage.get('signupSuccessMessage')
+        : ''
     }
 
     this.onSubmit = this.processForm.bind(this)
@@ -50,7 +54,6 @@ class LoginPage extends React.Component {
           errors: {}
         })
         Auth.authenticateUser(res.token, res.user)
-        localStorage.setItem('successMessage', res.message)
         this.context.router.replace('/')
       })
       .catch(errors => {
@@ -71,13 +74,18 @@ class LoginPage extends React.Component {
         onChangeEmail={this.onChangeEmail}
         onChangePassword={this.onChangePassword}
         errors={this.state.errors}
-        user={this.state.user} />
+        user={this.state.user}
+        successMessage={this.state.successMessage} />
     )
   }
 }
 
 LoginPage.contextTypes = {
   router: PropTypes.object.isRequired
+}
+
+LoginPage.propTypes = {
+  location: PropTypes.object
 }
 
 export default LoginPage

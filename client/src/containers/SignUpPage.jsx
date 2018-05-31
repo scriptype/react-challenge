@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import validator from 'validator'
 import SignUpForm from '../components/SignUpForm.jsx'
 import Api from '../helpers/Api'
+import Storage from '../helpers/Storage'
 
 class SignUpPage extends React.Component {
   /**
@@ -105,8 +106,8 @@ class SignUpPage extends React.Component {
           errors: {}
         })
 
-        localStorage.setItem('successMessage', res.message)
-        this.context.router.replace('/login')
+        Storage.set('signupSuccessMessage', res.message)
+        this.context.router.replace('/login?signedUp=1')
       })
       .catch(errors => {
         this.setState({
