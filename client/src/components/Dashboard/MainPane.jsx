@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import Auth from '../../helpers/Auth'
 
 const styles = theme => ({
   messageContainer: theme.mixins.gutters({
@@ -18,7 +19,7 @@ const styles = theme => ({
 const MainPane = ({ classes, secretData }) => (
   <div>
     <Typography variant="headline" component="h3">
-      Welcome user!
+      Welcome { Auth.getUser().name }!
     </Typography>
     <Typography className={classes.message} component="p">
       { secretData }

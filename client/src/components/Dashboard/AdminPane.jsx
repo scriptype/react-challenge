@@ -26,7 +26,7 @@ const styles = theme => ({
 const AdminPane = ({ classes, notifications, onReadNotification }) => (
   <div>
     <Typography variant="headline" component="h3">
-      Welcome admin!
+      Admin Section
     </Typography>
 
     <Typography className={classes.notifTitle} component="p">
